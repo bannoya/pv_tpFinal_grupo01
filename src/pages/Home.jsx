@@ -10,7 +10,7 @@ function Home() {
             <button
                 className="btn btn-success btn-lg"
                 style={{ height: "50px", width: "200px", marginTop: "10px" }}
-                onClick={() => window.location.href = "/login"}
+                onClick={() => window.location.href = "/registrar"}
             >
                 Registrarse
             </button>
