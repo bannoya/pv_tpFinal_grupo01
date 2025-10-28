@@ -1,17 +1,17 @@
 import { Outlet, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import { useTheme } from "../context/ThemeContext.jsx"; 
+import { useTheme } from "../context/ThemeContext.jsx";
 
 function Layouts() {
-  const { darkMode, toggleTheme } = useTheme(); 
+  const { darkMode, toggleTheme } = useTheme();
 
   return (
     <>
-  
+
       <header style={{ paddingBottom: "1px" }}>
         <Navbar
           expand="lg"
-          bg={darkMode ? "dark" : "light"} 
+          bg={darkMode ? "dark" : "light"}
           data-bs-theme={darkMode ? "dark" : "light"}
         >
           <Container>
@@ -26,6 +26,9 @@ function Layouts() {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/aboutUs">
                   ℹ️ About
+                </Nav.Link>
+                <Nav.Link as={Link} to="/registrar">
+                  📝 Registrar
                 </Nav.Link>
                 <NavDropdown title="Opciones" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/1">Action</NavDropdown.Item>
@@ -50,15 +53,14 @@ function Layouts() {
             </button>
           </div>
 
-       
+
           <Outlet />
         </div>
       </header>
 
       <footer
-        className={`mt-auto text-center py-4 ${
-          darkMode ? "bg-dark text-light" : "bg-light text-dark"
-        } border-top`}
+        className={`mt-auto text-center py-4 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"
+          } border-top`}
       >
         <Container>
           <h5 className="fw-bold mb-3">📞 Contacto</h5>
