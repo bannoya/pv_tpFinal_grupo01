@@ -8,6 +8,7 @@ import Error from "./pages/Error.jsx";
 import GameEstrella from "./components/Estrella.jsx";
 import {FormularioRegistro} from "./components/Registrar.jsx";
 import { JuegoFranco } from "./components/juegoFranco.jsx";
+import { JuegoEze } from "./components/juegoEze.jsx"
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="registrar" element={<FormularioRegistro />} />
           <Route path="juegoFranco" element={<JuegoFranco />} />
+          <Route path="juegoEze" element={<JuegoEze/>} />
           
         </Route>
       </Routes>
