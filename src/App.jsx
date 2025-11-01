@@ -10,6 +10,7 @@ import {FormularioRegistro} from "./components/Registrar.jsx";
 import { JuegoFranco } from "./components/juegoFranco.jsx";
 import { JuegoSeba01 } from "./components/juegoSeba01.jsx";
 import { JuegoSeba02 } from "./components/juegoSeba02.jsx";
+import { JuegoEze } from "./components/juegoEze.jsx"
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="juegoSeba01" element={<JuegoSeba01/>}/>
            <Route path="juegoSeba02" element={<JuegoSeba02/>}/>
           
+          <Route path="juegoEze" element={<JuegoEze/>} />
           
         </Route>
       </Routes>
