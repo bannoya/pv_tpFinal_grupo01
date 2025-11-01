@@ -23,20 +23,18 @@ export default function Games() {
       </h1>
 
       <Card
-        className={`shadow-lg border-0 text-center p-4 ${
-          darkMode ? "bg-secondary text-light" : "bg-white text-dark"
-        }`}
+        className={`shadow-lg border-0 text-center p-4 ${darkMode ? "bg-secondary text-light" : "bg-white text-dark"
+          }`}
         style={{
           width: "100%",
-          maxWidth: "900px", 
+          maxWidth: "900px",
           borderRadius: "1.5rem",
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
         }}
       >
         <Card.Header
-          className={`fs-5 fw-semibold ${
-            darkMode ? "bg-dark text-light" : "bg-primary text-white"
-          }`}
+          className={`fs-5 fw-semibold ${darkMode ? "bg-dark text-light" : "bg-primary text-white"
+            }`}
           style={{ borderTopLeftRadius: "1.5rem", borderTopRightRadius: "1.5rem" }}
         >
           Juego #1
@@ -72,11 +70,16 @@ export default function Games() {
               Ir al juego 🚀
             </Button>
           </Link>
-
-          <div className="my-4"></div>
           <Outlet />
         </Card.Body>
       </Card>
+      <button
+        className="btn btn-success btn-lg"
+        style={{ height: "50px", width: "200px", marginTop: "10px" }}
+        onClick={() => window.location.href = "/juegoFranco"}
+      >
+        juegoFranco
+      </button>
     </div>
   );
 }

@@ -1,116 +1,170 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Alert, Button } from "react-bootstrap";
-import cat from '../assets/sound/cat.mp3';
-import dog from '../assets/sound/dog.mp3';
-import cats from '../assets/sound/cats.mp3';
-import dogs from '../assets/sound/dogs.mp3';
+import { Container, Row, Alert, Button } from "react-bootstrap";
+import cat from "../assets/sound/cat.mp3";
+import dog from "../assets/sound/dog.mp3";
+import cats from "../assets/sound/cats.mp3";
+import dogs from "../assets/sound/dogs.mp3";
+import cow from "../assets/sound/cow.mp3";
+import horse from "../assets/sound/horse.mp3";
+import rooster from "../assets/sound/rooster.mp3";
+import { useTheme } from "../context/ThemeContext.jsx";
+import { JuegoFranco2 } from "./JuegoFranco2.jsx";
 
-const audios = [cat, dog, cats, dogs];
+const sonidos = [
+    { id: 1, nombre: "Perro", audio: dog },
+    { id: 2, nombre: "Gato", audio: cat },
+    { id: 3, nombre: "Gatos", audio: cats },
+    { id: 4, nombre: "Perros", audio: dogs },
+    { id: 5, nombre: "Vaca", audio: cow },
+    { id: 6, nombre: "Caballo", audio: horse },
+    { id: 7, nombre: "Gallo", audio: rooster },
+];
 
 export function JuegoFranco() {
-    const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
+    const { darkMode } = useTheme();
+    const [nivel, setNivel] = useState(1);
     const [audioSeleccionado, setAudioSeleccionado] = useState(null);
-    const [resultado, setResultado] = useState(null); // true = correcto, false = incorrecto
-    const [show, setShow] = useState(true);
+    const [opciones, setOpciones] = useState([]);
+    const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
+    const [resultado, setResultado] = useState(null);
+    const [show, setShow] = useState(false);
+
+    const irNivel2 = () => {
+        setNivel(2);
+    };
 
     useEffect(() => {
         generarAudio();
     }, []);
+
+    const mezclarArray = (array) => array.sort(() => Math.random() - 0.5);
+
     const generarAudio = () => {
-        const randomIndex = Math.floor(Math.random() * audios.length);
-        setAudioSeleccionado(new Audio(audios[randomIndex]));
+        const randomIndex = Math.floor(Math.random() * sonidos.length);
+        const seleccionado = sonidos[randomIndex];
+        const incorrectas = sonidos
+            .filter((s) => s.id !== seleccionado.id)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3);
+        const opcionesFinales = mezclarArray([...incorrectas, seleccionado]);
+        setAudioSeleccionado(seleccionado);
+        setOpciones(opcionesFinales);
         setRespuestaSeleccionada(null);
-        setShow(false);
         setResultado(null);
+        setShow(false);
     };
 
     const playAudio = () => {
-        if (audioSeleccionado) audioSeleccionado.play();
-    };
-
-    const opciones = [
-        { id: "1", texto: "Perro" },
-        { id: "2", texto: "Gato" },
-        { id: "3", texto: "Gatos" },
-        { id: "4", texto: "Perros" },
-    ];
-
-    const seleccionarOpcion = (id) => {
-        setRespuestaSeleccionada(id);
+        if (audioSeleccionado) {
+            const audio = new Audio(audioSeleccionado.audio);
+            audio.play();
+        }
     };
 
     const comprobarRespuesta = () => {
-        if (!respuestaSeleccionada) return; // no hacer nada si no hay selección
+        if (!respuestaSeleccionada) return;
+        const esCorrecto = respuestaSeleccionada === audioSeleccionado.nombre;
+        setResultado(esCorrecto);
         setShow(true);
-        let eleccion = false;
-
-        if ((audioSeleccionado.src.includes('cat') && respuestaSeleccionada === "2") ||
-            (audioSeleccionado.src.includes('dog') && respuestaSeleccionada === "1") ||
-            (audioSeleccionado.src.includes('cats') && respuestaSeleccionada === "3") ||
-            (audioSeleccionado.src.includes('dogs') && respuestaSeleccionada === "4")) {
-            eleccion = true;
-        }
-
-        setResultado(eleccion);
     };
 
     return (
+        <Container
+            fluid
+            className={`p-5 d-flex flex-column align-items-center justify-content-center min-vh-100 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                }`}
+            style={{
+                background: darkMode
+                    ? "linear-gradient(135deg, #1a1a1a, #0d0d0d)"
+                    : "linear-gradient(135deg, #f8f9fa, #e9ecef)",
+                transition: "all 0.4s ease-in-out",
+            }}
+        >
 
-        <Container fluid className="p-5 bg-light text-center">
-            <Row className="mb-4 flex-column gap-4">
-                <h1>Elige la opción correcta que corresponde al audio</h1>
+            {nivel === 1 && (
+                <>
+                    <Row className="w-100 text-center mb-4">
+                        <h1 className="fw-bold">
+                            Elige la opción correcta que corresponde al audio
+                        </h1>
+                    </Row>
 
-                <Col>
-                    <button
-                        className="btn btn-success btn-lg"
-                        style={{ height: "100px", width: "200px" }}
-                        onClick={playAudio}
-                    >
-                        <span role="img" aria-label="play" style={{ marginRight: "8px" }}>▶️</span>
-                        Audio
-                    </button>
-                </Col>
 
-                <Col className="d-flex justify-content-center gap-3">
-                    {opciones.map((opcion) => (
-                        <button
-                            key={opcion.id}
-                            id={`btn-opcion-${opcion.id}`}
-                            className={`btn btn-outline-primary btn-lg ${respuestaSeleccionada === opcion.id ? "active" : ""}`}
-                            style={{ height: "100px", width: "200px", marginTop: "100px" }}
-                            onClick={() => seleccionarOpcion(opcion.id)}
+                    <Row className="w-100 d-flex justify-content-center mb-4">
+                        <Button
+                            variant="success"
+                            size="lg"
+                            style={{ height: "80px", width: "200px" }}
+                            onClick={playAudio}
                         >
-                            {opcion.texto}
-                        </button>
-                    ))}
-                </Col>
+                            ▶️ Escuchar Audio
+                        </Button>
+                    </Row>
 
-                <div>
+
+                    <Row className="d-flex flex-wrap justify-content-center gap-3 border p-4 rounded bg-white shadow-sm"
+                        style={{
+                            minHeight: "120px",
+                            width: "80%",
+                        }}>
+                        {opciones.map((opcion) => (
+                            <Button
+                                key={opcion.id}
+                                variant={
+                                    respuestaSeleccionada === opcion.nombre
+                                        ? "primary"
+                                        : "outline-primary"
+                                }
+                                className="btn-lg"
+                                style={{ height: "80px", width: "200px" }}
+                                onClick={() => setRespuestaSeleccionada(opcion.nombre)}
+                            >
+                                {opcion.nombre}
+                            </Button>
+                        ))}
+                    </Row>
+
+                    {/* ⚠️ Mensaje de resultado */}
                     {resultado !== null && show && (
-
-                        <Alert show={show} variant={resultado ? "success" : "danger"} onClose={() => setShow(false)}
-                            dismissible className="mt-3">{resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
+                        <Alert
+                            show={show}
+                            variant={resultado ? "success" : "danger"}
+                            onClose={() => setShow(false)}
+                            dismissible
+                            className="mt-3 text-center w-50"
+                        >
+                            {resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
                         </Alert>
                     )}
 
-                </div>
-                <div>
-                    {resultado ? <Button onClick={generarAudio} variant="success">
-                        Reiniciar 
-                    </Button> : null}
+                    {/* 🧩 Botones de acción */}
+                    <Row className="w-100 d-flex justify-content-center gap-3 mt-4">
+                        <Button
+                            variant="success"
+                            size="lg"
+                            style={{ width: "200px", height: "60px" }}
+                            onClick={comprobarRespuesta}
+                        >
+                            Comprobar
+                        </Button>
 
-                </div>
+                        {show && (
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                style={{ width: "200px", height: "60px" }}
+                                onClick={irNivel2}
+                            >
+                                Siguiente
+                            </Button>
+                        )}
+                    </Row>
+                </>
+            )}
 
-                <Col>
-                    <button
-                        className="btn btn-success btn-lg"
-                        style={{ height: "50px", width: "200px", marginTop: "10px" }}
-                        onClick={comprobarRespuesta}
-                    >
-                        Comprobar
-                    </button>
-                </Col>
-            </Row>
+            {/* NIVEL 2 */}
+            {nivel === 2 && <JuegoFranco2 />}
+           
         </Container>
     );
 }
