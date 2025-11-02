@@ -6,11 +6,13 @@ import Games from "./pages/Games.jsx";
 import AboutUs from "./pages/AboutUS.jsx";
 import Error from "./pages/Error.jsx";
 import GameEstrella from "./components/Estrella.jsx";
-import {FormularioRegistro} from "./components/Registrar.jsx";
+import { FormularioRegistro } from "./components/Registrar.jsx";
 import { JuegoFranco } from "./components/juegoFranco.jsx";
 import { JuegoSeba01 } from "./components/juegoSeba01.jsx";
 import { JuegoSeba02 } from "./components/juegoSeba02.jsx";
 import { JuegoEze } from "./components/juegoEze.jsx"
+import { Diagonostico } from "./pages/Diagnostico.jsx";
+import { JuegoFranco2 } from "./components/JuegoFranco2.jsx";
 
 
 function App() {
@@ -31,12 +33,14 @@ function App() {
 
           <Route path="home" element={<Home />} />
           <Route path="registrar" element={<FormularioRegistro />} />
+          <Route path="diagnostico" element={<Diagonostico />} />
           <Route path="juegoFranco" element={<JuegoFranco />} />
-          <Route path="juegoSeba01" element={<JuegoSeba01/>}/>
-           <Route path="juegoSeba02" element={<JuegoSeba02/>}/>
-          
-          <Route path="juegoEze" element={<JuegoEze/>} />
-          
+          <Route path="juegoFranco2" element={<JuegoFranco2 />} />
+          <Route path="juegoSeba01" element={<JuegoSeba01 />} />
+          <Route path="juegoSeba02" element={<JuegoSeba02 />} />
+
+          <Route path="juegoEze" element={<JuegoEze />} />
+
         </Route>
       </Routes>
     </Container>

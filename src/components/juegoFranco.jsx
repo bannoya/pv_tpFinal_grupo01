@@ -8,7 +8,7 @@ import cow from "../assets/sound/cow.mp3";
 import horse from "../assets/sound/horse.mp3";
 import rooster from "../assets/sound/rooster.mp3";
 import { useTheme } from "../context/ThemeContext.jsx";
-import { JuegoFranco2 } from "./JuegoFranco2.jsx";
+
 
 const sonidos = [
     { id: 1, nombre: "Perro", audio: dog },
@@ -22,16 +22,14 @@ const sonidos = [
 
 export function JuegoFranco() {
     const { darkMode } = useTheme();
-    const [nivel, setNivel] = useState(1);
+
     const [audioSeleccionado, setAudioSeleccionado] = useState(null);
     const [opciones, setOpciones] = useState([]);
     const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
     const [resultado, setResultado] = useState(null);
     const [show, setShow] = useState(false);
 
-    const irNivel2 = () => {
-        setNivel(2);
-    };
+
 
     useEffect(() => {
         generarAudio();
@@ -81,90 +79,80 @@ export function JuegoFranco() {
             }}
         >
 
-            {nivel === 1 && (
-                <>
-                    <Row className="w-100 text-center mb-4">
-                        <h1 className="fw-bold">
-                            Elige la opción correcta que corresponde al audio
-                        </h1>
-                    </Row>
+
+            <>
+                <Row className="w-100 text-center mb-4">
+                    <h1 className="fw-bold">
+                        Elige la opción correcta que corresponde al audio
+                    </h1>
+                </Row>
 
 
-                    <Row className="w-100 d-flex justify-content-center mb-4">
+                <Row className="w-100 d-flex justify-content-center mb-4">
+                    <Button
+                        variant="success"
+                        size="lg"
+                        style={{ height: "80px", width: "200px" }}
+                        onClick={playAudio}
+                    >
+                        ▶️ Escuchar Audio
+                    </Button>
+                </Row>
+
+
+                <Row className="d-flex flex-wrap justify-content-center gap-3 border p-4 rounded bg-white shadow-sm"
+                    style={{
+                        minHeight: "120px",
+                        width: "80%",
+                    }}>
+                    {opciones.map((opcion) => (
                         <Button
-                            variant="success"
-                            size="lg"
+                            key={opcion.id}
+                            variant={
+                                respuestaSeleccionada === opcion.nombre
+                                    ? "primary"
+                                    : "outline-primary"
+                            }
+                            className="btn-lg"
                             style={{ height: "80px", width: "200px" }}
-                            onClick={playAudio}
+                            onClick={() => setRespuestaSeleccionada(opcion.nombre)}
                         >
-                            ▶️ Escuchar Audio
+                            {opcion.nombre}
                         </Button>
-                    </Row>
+                    ))}
+                </Row>
 
+                {/* ⚠️ Mensaje de resultado */}
+                {resultado !== null && show && (
+                    <Alert
+                        show={show}
+                        variant={resultado ? "success" : "danger"}
+                        onClose={() => setShow(false)}
+                        dismissible
+                        className="mt-3 text-center w-50"
+                    >
+                        {resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
+                    </Alert>
+                )}
 
-                    <Row className="d-flex flex-wrap justify-content-center gap-3 border p-4 rounded bg-white shadow-sm"
-                        style={{
-                            minHeight: "120px",
-                            width: "80%",
-                        }}>
-                        {opciones.map((opcion) => (
-                            <Button
-                                key={opcion.id}
-                                variant={
-                                    respuestaSeleccionada === opcion.nombre
-                                        ? "primary"
-                                        : "outline-primary"
-                                }
-                                className="btn-lg"
-                                style={{ height: "80px", width: "200px" }}
-                                onClick={() => setRespuestaSeleccionada(opcion.nombre)}
-                            >
-                                {opcion.nombre}
-                            </Button>
-                        ))}
-                    </Row>
+                {/* 🧩 Botones de acción */}
+                <Row className="w-100 d-flex justify-content-center gap-3 mt-4">
+                    <Button
+                        variant="success"
+                        size="lg"
+                        style={{ width: "200px", height: "60px" }}
+                        onClick={comprobarRespuesta}
+                    >
+                        Comprobar
+                    </Button>
 
-                    {/* ⚠️ Mensaje de resultado */}
-                    {resultado !== null && show && (
-                        <Alert
-                            show={show}
-                            variant={resultado ? "success" : "danger"}
-                            onClose={() => setShow(false)}
-                            dismissible
-                            className="mt-3 text-center w-50"
-                        >
-                            {resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
-                        </Alert>
-                    )}
+                </Row>
+            </>
 
-                    {/* 🧩 Botones de acción */}
-                    <Row className="w-100 d-flex justify-content-center gap-3 mt-4">
-                        <Button
-                            variant="success"
-                            size="lg"
-                            style={{ width: "200px", height: "60px" }}
-                            onClick={comprobarRespuesta}
-                        >
-                            Comprobar
-                        </Button>
-
-                        {show && (
-                            <Button
-                                variant="secondary"
-                                size="lg"
-                                style={{ width: "200px", height: "60px" }}
-                                onClick={irNivel2}
-                            >
-                                Siguiente
-                            </Button>
-                        )}
-                    </Row>
-                </>
-            )}
 
             {/* NIVEL 2 */}
-            {nivel === 2 && <JuegoFranco2 />}
-           
+
+
         </Container>
     );
 }

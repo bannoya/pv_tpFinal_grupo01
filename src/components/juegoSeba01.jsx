@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 
 const COLORS = [
-    { key: "red", label: "Red", hex: "#e63946" },
-    { key: "blue", label: "Blue", hex: "#457b9d" },
-    { key: "green", label: "Green", hex: "#2a9d8f" },
-    { key: "yellow", label: "Yellow", hex: "#e9c46a" },
-    { key: "purple", label: "Purple", hex: "#7e57c2" },
-    { key: "orange", label: "Orange", hex: "#f4a261" },
-    { key: "pink", label: "Pink", hex: "#f28482" },
+    { key: "red", label: "Red", hex: "#ff0000ff" },
+    { key: "blue", label: "Blue", hex: "#1100ffff" },
+    { key: "green", label: "Green", hex: "#095f14ff" },
+    { key: "yellow", label: "Yellow", hex: "#ffe600ff" },
+    { key: "purple", label: "Purple", hex: "#5d00ffff" },
+    { key: "orange", label: "Orange", hex: "#e68a35ff" },
+    { key: "pink", label: "Pink", hex: "#f282e3ff" },
     { key: "black", label: "Black", hex: "#000000" },
 ];
 
