@@ -30,6 +30,9 @@ function Layouts() {
                 <Nav.Link as={Link} to="/registrar">
                   📝 Registrar
                 </Nav.Link>
+                <Nav.Link as={Link} to="/diagnostico">
+                  📝 Diagnostico
+                </Nav.Link>
                 <NavDropdown title="Opciones" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/2">Another action</NavDropdown.Item>
@@ -83,6 +86,9 @@ function Layouts() {
             </Link>
             <Link to="/registrar" className={darkMode ? "text-light" : "text-dark"}>
               Registro
+            </Link>
+             <Link to="/diagnostico" className={darkMode ? "text-light" : "text-dark"}>
+              Diagnostico
             </Link>
           </div>
           <small className="d-block mt-3">
