@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col, Alert, Button } from "react-bootstrap";
 
 const NUMBERS = [
     { value: 1, en: "one" }, { value: 2, en: "two" }, { value: 3, en: "three" },
@@ -24,16 +24,18 @@ function pickDistractors(pool, correct, k = 2, key = "en") {
     return shuffle(candidates).slice(0, k);
 }
 
-export function JuegoSeba02({ variant = "numbers" }) {
+export function JuegoSeba02({ contador, setContador, onFinish, variant = "numbers" }) {
     const [prompt, setPrompt] = useState(null);
     const [correct, setCorrect] = useState(null);
     const [options, setOptions] = useState([]);
-    const [seleccion, setSeleccion] = useState(null);
     const [resultado, setResultado] = useState(null);
     const [show, setShow] = useState(false);
 
+    const [ronda, setRonda] = useState(1);
+    const rondasMax = 3;
+    const [terminado, setTerminado] = useState(false);
+
     function nuevaRonda() {
-        setSeleccion(null);
         setResultado(null);
         setShow(false);
 
@@ -51,91 +53,92 @@ export function JuegoSeba02({ variant = "numbers" }) {
         nuevaRonda();
     }, [variant]);
 
-    const comprobar = () => {
-        if (!seleccion) return;
-        const ok = seleccion === correct.en;
+    const manejarClick = (opt) => {
+        if (resultado !== null || terminado) return;
+        const ok = opt === correct.en;
         setResultado(ok);
         setShow(true);
+        if (ok) setContador((c) => c + 1);
+
+
         setTimeout(() => {
             setShow(false);
-            nuevaRonda();
-        }, ok ? 800 : 1000);
+            if (ronda < rondasMax) {
+                setRonda((r) => r + 1);
+                nuevaRonda();
+            } else {
+                setTerminado(true);
+            }
+        }, ok ? 700 : 900);
     };
 
-    if (!correct) return null;
+    if (!correct && !terminado) return null;
 
     return (
         <Container fluid className="p-5 bg-light text-center">
             <Row className="mb-4 flex-column gap-4">
-                <h1>
-                    {variant === "numbers" ? "Elige el nombre correcto en inglés" : "Elige el día correcto en inglés"}
-                </h1>
+                <h1>Elige el nombre correcto en inglés</h1>
+                <p>
+                    Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax} ·{" "}
 
+                </p>
 
-                <Col>
-                    <div
-                        className="mx-auto"
-                        style={{
-                            display: "inline-block",
-                            padding: "8px 18px",
-                            borderRadius: 12,
-                            border: "1px solid #eee",
-                            fontWeight: 600,
-                            fontSize: 22,
-                            minWidth: 160,
-                        }}
-                    >
-                        {prompt}
+                {!terminado ? (
+                    <>
+                        <Col>
+                            <div
+                                className="mx-auto"
+                                style={{
+                                    display: "inline-block",
+                                    padding: "8px 18px",
+                                    borderRadius: 12,
+                                    border: "1px solid #eee",
+                                    fontWeight: 600,
+                                    fontSize: 22,
+                                    minWidth: 160,
+                                }}
+                            >
+                                {prompt}
+                            </div>
+                        </Col>
+
+                        <Col className="d-flex justify-content-center gap-3 flex-wrap">
+                            {options.map((opt) => (
+                                <button
+                                    key={opt}
+                                    className={`btn btn-outline-primary btn-lg`}
+                                    style={{
+                                        height: "100px",
+                                        width: "200px",
+                                        marginTop: "50px",
+                                        border: "3px solid transparent",
+                                        borderRadius: "10px",
+                                        transition: "all 0.2s ease-in-out",
+                                    }}
+                                    onClick={() => manejarClick(opt)}
+                                    disabled={resultado !== null}
+                                >
+                                    {opt}
+                                </button>
+                            ))}
+                        </Col>
+
+                        {resultado !== null && show && (
+                            <Alert
+                                show={show}
+                                variant={resultado ? "success" : "danger"}
+                                className="mt-3"
+                            >
+                                {resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
+                            </Alert>
+                        )}
+                    </>
+                ) : (
+                    <div className="mt-4">
+                        <h2 className="mb-3">🎉 ¡Juego completado!</h2>
+
                     </div>
-                </Col>
-
-
-                <Col className="d-flex justify-content-center gap-3 flex-wrap">
-                    {options.map((opt) => (
-                        <button
-                            key={opt}
-                            className={`btn btn-outline-primary btn-lg ${seleccion === opt ? "active" : ""}`}
-                            style={{
-                                height: "100px",
-                                width: "200px",
-                                marginTop: "50px",
-                                border: seleccion === opt ? "5px solid #07641bff" : "3px solid transparent",
-                                boxShadow: seleccion === opt ? "0 0 15px #07641bff" : "none",
-                                borderRadius: "10px",
-                                transition: "all 0.2s ease-in-out",
-
-                            }}
-                            onClick={() => setSeleccion(opt)}
-                        >
-                            {opt}
-                        </button>
-                    ))}
-                </Col>
-
-                <div>
-                    {resultado !== null && show && (
-                        <Alert
-                            show={show}
-                            variant={resultado ? "success" : "danger"}
-                            onClose={() => setShow(false)}
-                            dismissible
-                            className="mt-3"
-                        >
-                            {resultado ? "¡Correcto!" : "Incorrecto, intenta de nuevo."}
-                        </Alert>
-                    )}
-                </div>
-
-
-                <Col>
-                    <button
-                        className="btn btn-success btn-lg"
-                        style={{ height: "50px", width: "200px", marginTop: "10px" }}
-                        onClick={comprobar}
-                    >
-                        Comprobar
-                    </button>
-                </Col>
+                )}
             </Row>
         </Container>
     );
