@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import Layouts from "./pages/Layouts.jsx";
+import Layouts from "./components/Layouts.jsx";
+import { ProtectorRutas } from "./components/ProtectorRutas.jsx";
 import Home from "./pages/Home.jsx";
 import Games from "./pages/Games.jsx";
 import AboutUs from "./pages/AboutUS.jsx";
@@ -14,7 +15,7 @@ import { JuegoEze } from "./components/juegoEze.jsx"
 import { Diagonostico } from "./pages/Diagnostico.jsx";
 import { JuegoFranco2 } from "./components/JuegoFranco2.jsx";
 import { ResultadosDiagnostico } from "./components/ResultadosDiagnostico.jsx";
-
+import {Proyectos} from "./pages/proyectos.jsx";
 
 function App() {
   return (
@@ -23,7 +24,12 @@ function App() {
         <Route path="/" element={<Layouts />}>
 
           <Route index element={<Home />} />
-
+          
+          <Route path="/proyectos" element={
+            <ProtectorRutas allowedRoles ={["ADMINISTRADOR"]} >
+            <Proyectos />
+            </ProtectorRutas>
+            } />
           <Route path="games" element={<Games />}>
             <Route path="estrella" element={<GameEstrella />} />
           </Route>

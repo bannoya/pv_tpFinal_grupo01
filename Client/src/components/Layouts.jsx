@@ -1,9 +1,21 @@
 import { Outlet, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext.jsx";
+import { useNavigate } from "react-router-dom";
+
+import { useAutorizacion } from "../hooks/useAutorizacion.js";
 
 function Layouts() {
   const { darkMode, toggleTheme } = useTheme();
+
+  const { user,isAuthenticated, logout } = useAutorizacion();
+  const navigate = useNavigate();
+
+  const manejarLogout = () => {
+    const { logout } = useAutorizacion();
+    logout();
+    navigate('/');
+  };
 
   return (
     <>
@@ -34,6 +46,10 @@ function Layouts() {
                   📝 Diagnostico
                 </Nav.Link>
                 <NavDropdown title="Opciones" id="basic-nav-dropdown">
+                  {isAuthenticated && user?.rol === 'ADMINISTRADOR'
+                  && (<NavDropdown.Item href= "/proyectos">Proyectos</NavDropdown.Item>)
+                  || user?.rol === 'ALUMNO'
+                  && (<NavDropdown.Item href= "/games">Juegos</NavDropdown.Item>)}
                   <NavDropdown.Item href="#action/1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/2">Another action</NavDropdown.Item>
                   <NavDropdown.Divider />
