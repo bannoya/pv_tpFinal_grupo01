@@ -1,0 +1,29 @@
+.saludo-container {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+}
+
+.saludo-title {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.saludo-item {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #423f3f;
+  margin: 0.5rem 0;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.saludo-item:hover {
+  transform: translateY(-3px);
+  color: #e67e22;
+}

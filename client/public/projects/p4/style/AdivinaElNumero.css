@@ -1,0 +1,160 @@
+/* Ejercicio01.css — estilo unificado con Ejercicio02 y Saludo */
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #9face6);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* Card / contenedor principal (mismo estilo que .ejercicio02-container / .saludo-container) */
+.game-container,
+.ejercicio02-container,
+.saludo-container {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+/* Titulos */
+.title,
+.ejercicio02-title,
+.saludo-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+/* Subtitulo */
+.subtitle {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* Intentos (soporto ambas clases por si tenés typo) */
+.attempts,
+.attemps {
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Destacado del número de intentos */
+.attempts span,
+.attemps span {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+/* Formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+/* Input */
+.input-number {
+  padding: 0.7rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+  width: 160px;
+  box-sizing: border-box;
+}
+
+.input-number:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.6);
+}
+
+/* Botones (misma apariencia que Ejercicio02) */
+.btn {
+  width: 120px;
+  /* mismo ancho */
+  height: 45px;
+  /* misma altura */
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Variante verificar */
+.btn.verify {
+  background: #2ecc71;
+}
+
+.btn.verify:hover {
+  background: #27ae60;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Variante rendirse */
+
+
+.btn.surrender:hover {
+  background: #c0392b;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Resultado y mensaje (mismos estilos que en Ejercicio02) */
+.resultado {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2980b9;
+  margin-top: 0.5rem;
+}
+
+.mensaje {
+  font-size: 1rem;
+  color: #8e44ad;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* Responsivo: en pantallas pequeñas el ancho del card baja */
+@media (max-width: 420px) {
+
+  .game-container,
+  .ejercicio02-container,
+  .saludo-container {
+    width: calc(100% - 2rem);
+    padding: 1.5rem;
+  }
+
+
+
+  .input-number {
+    width: 130px;
+  }
+
+}
+
+.btn:disabled {
+  background: #bdc3c7;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.9;
+}

@@ -7,12 +7,61 @@ function AboutUs() {
 
   return (
     <div
-      className={`container-fluid d-flex flex-column justify-content-center align-items-center text-center p-5 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"
-        }`}
+      className={`container-fluid d-flex flex-column justify-content-center align-items-center text-center p-5 ${
+        darkMode ? "bg-dark text-light" : "bg-light text-dark"
+      }`}
     >
       <div className="w-100 mb-5">
-        <h1 className="fw-bold text-warning mb-4 display-4">Proyecto X</h1>
+        {/* --- Título --- */}
+        <h1 className="fw-bold text-warning mb-5 display-4">Proyecto X</h1>
 
+        {/* --- Cards --- */}
+        <div className="row justify-content-center g-4 mb-5">
+          {[
+            {
+              nombre: "Bach, Juan Sebastian",
+              github: "https://github.com/bannoya",
+            },
+            {
+              nombre: "Arancibia, Franco Nicolas",
+              github: "https://github.com/fatxd",
+            },
+            {
+              nombre: "Verón, Néstor Ezequiel",
+              github: "https://github.com/EquiverN",
+            },
+          ].map((persona, index) => (
+            <div
+              className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center"
+              key={index}
+            >
+              <div className="card h-100 shadow-sm" style={{ fontSize: "0.85rem" }}>
+                <img
+                  src={insetar}
+                  className="card-img-top"
+                  alt={`Imagen de ${persona.nombre}`}
+                />
+                <div className="card-body p-3">
+                  <h6 className="card-title mb-2">{persona.nombre}</h6>
+                  <p className="card-text mb-3">
+                    Estudiante de Ier año de la carrera "Tecnicatura Universitaria
+                    en desarrollo integral de videojuegos".
+                  </p>
+                  <a
+                    href={persona.github}
+                    className="btn btn-dark btn-sm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* --- Texto inferior --- */}
         <p className="fs-4 mx-auto mb-4" style={{ maxWidth: "900px" }}>
           Somos <strong>Proyecto X</strong>, un grupo de estudiantes apasionados
           por el desarrollo de videojuegos. Nuestro equipo está conformado por{" "}
@@ -41,38 +90,6 @@ function AboutUs() {
           ¡Seguimos creciendo como equipo y soñando en grande! 🚀
           Abrazo del equipo de <strong>Proyecto X</strong>.
         </p>
-      </div>
-
-      <div className="row justify-content-center g-2">
-        {[
-          {
-            nombre: "Bach, Juan Sebastian",
-            github: "https://github.com/bannoya"
-          },
-          {
-            nombre: "Arancibia, Franco Nicolas",
-            github: "https://github.com/fatxd"
-          },
-          {
-            nombre: "Verón, Néstor Ezequiel",
-            github: "https://github.com/EquiverN"
-          }
-        ].map((persona, index) => (
-          <div className="col-6 col-sm-4 col-md-3 col-lg-2" key={index}>
-            <div className="card h-100" style={{ fontSize: "0.8rem" }}>
-              <img src={insetar} className="card-img-top" alt={`Imagen de ${persona.nombre}`} />
-              <div className="card-body p-2">
-                <h6 className="card-title mb-1">{persona.nombre}</h6>
-                <p className="card-text mb-2">
-                  Estudiante de Ier año de la carrera "Tecnicatura Universitaria en desarrollo integral de videojuegos".
-                </p>
-                <a href={persona.github} className="btn btn-dark btn-sm" target="_blank" rel="noopener noreferrer">
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
