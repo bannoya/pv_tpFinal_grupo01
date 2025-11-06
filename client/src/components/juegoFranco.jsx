@@ -30,17 +30,17 @@ export function JuegoFranco({ contador, setContador, onFinish }) {
     const [show, setShow] = useState(false);
     const [bloqueado, setBloqueado] = useState(false);
 
- 
+
     const [ronda, setRonda] = useState(1);
     const rondasMax = 3;
     const [terminado, setTerminado] = useState(false);
 
     function nuevaRonda() {
-       
+
         const seleccionado = sonidos[Math.floor(Math.random() * sonidos.length)];
-      
+
         const incorrectas = mezclar(sonidos.filter(s => s.id !== seleccionado.id)).slice(0, 3);
-    
+
         const opcionesFinales = mezclar([seleccionado, ...incorrectas]);
 
         setAudioSeleccionado(seleccionado);
@@ -52,7 +52,7 @@ export function JuegoFranco({ contador, setContador, onFinish }) {
 
     useEffect(() => {
         nuevaRonda();
- 
+
     }, []);
 
     const playAudio = () => {
@@ -162,10 +162,10 @@ export function JuegoFranco({ contador, setContador, onFinish }) {
                     <h2 className="mb-3">🎉 ¡Juego completado!</h2>
 
 
-           
+
                 </div>
-    )
-}
+            )
+            }
         </Container >
     );
 }
