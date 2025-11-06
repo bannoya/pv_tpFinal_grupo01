@@ -50,5 +50,3 @@ server/.env
 server/*.log
 server/*.tmp
 
-# ⚠️ Evita subir credenciales directas
-server/conection.js
