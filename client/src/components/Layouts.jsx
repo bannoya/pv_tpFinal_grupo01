@@ -2,6 +2,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useAutorizacion } from "../hooks/useAutorizacion.js";
+import logoPX from "../assets/img/icon_PX.png";
 
 function Layouts() {
   const { darkMode, toggleTheme } = useTheme();
@@ -27,48 +28,63 @@ function Layouts() {
           data-bs-theme={darkMode ? "dark" : "light"}
         >
           <Container>
-            <Navbar.Brand as={Link} to="/home">
-              🏠 Home
+            <Navbar.Brand
+              as={Link}
+              to="/home"
+              className="fw-bold d-flex align-items-center gap-2"
+              style={{ fontSize: "1.8rem" }}
+            >
+              <img
+                src={logoPX}
+                alt="Proyecto X Logo"
+                style={{
+                  height: "48px",
+                  width: "auto",
+                  filter: darkMode ? "invert(1)" : "none",
+                }}
+              />
+              <span>Proyecto X</span>
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/games">🎮 Games</Nav.Link>
+              <Nav
+                className="align-items-center gap-3 ms-auto"
+                style={{ fontSize: "1.15rem", fontWeight: "500" }}
+              >
+                <Nav.Link as={Link} to="/home">🏠 Home</Nav.Link>
                 <Nav.Link as={Link} to="/aboutUs">ℹ️ About</Nav.Link>
                 <Nav.Link as={Link} to="/registrar">📝 Registrar</Nav.Link>
-                <Nav.Link as={Link} to="/diagnostico">📝 Diagnostico</Nav.Link>
+                <Nav.Link as={Link} to="/games">🎮 Games</Nav.Link>
+                <Nav.Link as={Link} to="/diagnostico">💡 Diagnóstico</Nav.Link>
 
-                <NavDropdown title="Opciones" id="basic-nav-dropdown">
-                 
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={manejarLogout}>
-                    Cerrar sesión
-                  </NavDropdown.Item>
+                <NavDropdown title="💼 Proyectos" id="basic-nav-dropdown" align="end">
+                  <NavDropdown.Item as={Link} to="/proyecto2">Proyecto 2</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto3">Proyecto 3</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
                 </NavDropdown>
+                <button
+                  onClick={toggleTheme}
+                  className={`btn fw-bold ${darkMode ? "btn-outline-light" : "btn-outline-dark"}`}
+                  style={{ fontSize: "1rem" }}
+                >
+                  {darkMode ? "☀️ Claro" : "🌙 Oscuro"}
+                </button>
+                
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
 
         <div className="container-fluid p-3">
-          <div className="d-flex justify-content-end mb-3">
-            <button
-              onClick={toggleTheme}
-              className={`btn fw-bold ${darkMode ? "btn-light" : "btn-dark"}`}
-            >
-              {darkMode ? "☀️ Modo Claro" : "🌙 Modo Oscuro"}
-            </button>
-          </div>
-
           <Outlet />
         </div>
       </header>
 
       <footer
-        className={`mt-auto text-center py-4 ${
-          darkMode ? "bg-dark text-light" : "bg-light text-dark"
-        } border-top`}
+        className={`mt-auto text-center py-4 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"
+          } border-top`}
       >
         <Container>
           <h5 className="fw-bold mb-3">📞 Contacto</h5>

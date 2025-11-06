@@ -16,6 +16,10 @@ import { Diagonostico } from "./pages/Diagnostico.jsx";
 import { JuegoFranco2 } from "./components/JuegoFranco2.jsx";
 import { ResultadosDiagnostico } from "./components/ResultadosDiagnostico.jsx";
 import Proyectos from "./pages/Proyectos.jsx";
+import Project4 from "./components/Project4.jsx";
+import Project5 from "./components/Project5.jsx";
+import Project3 from "./components/Project3.jsx";
+import Project2 from "./components/Project2.jsx";
 
 function App() {
   return (
@@ -47,10 +51,13 @@ function App() {
           <Route path="juegoSeba02" element={<JuegoSeba02 />} />
 
           <Route path="juegoEze" element={<JuegoEze />} />
-
+            
           <Route path="resultadoDiagnostico" element={<ResultadosDiagnostico />} />
-
+          <Route path="proyecto4" element={<Project4/>} />
+          <Route path="proyecto5" element={<Project5/>} />
         </Route>
+        <Route path="/proyecto3" element={<Project3/>} />
+        <Route path="/proyecto2" element={<Project2/>} />
       </Routes>
     </Container>
   );
