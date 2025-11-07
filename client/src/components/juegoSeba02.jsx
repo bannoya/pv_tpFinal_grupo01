@@ -75,7 +75,7 @@ export function JuegoSeba02({ contador, setContador, onFinish, variant = "number
     if (!correct && !terminado) return null;
 
     return (
-        <Container fluid className="p-5 bg-light text-center">
+        <Container fluid className="p-5 bg-light text-center text-dark">
             <Row className="mb-4 flex-column gap-4">
                 <h1>Elige el nombre correcto en inglés</h1>
                 <p>

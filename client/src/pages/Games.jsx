@@ -71,15 +71,8 @@ export default function Games() {
             </Button>
           </Link>
           <Outlet />
-        </Card.Body>
+        </Card.Body>  
       </Card>
-      <button
-        className="btn btn-success btn-lg"
-        style={{ height: "50px", width: "200px", marginTop: "10px" }}
-        onClick={() => window.location.href = "/juegoFranco"}
-      >
-        juegoFranco
-      </button>
     </div>
   );
 }

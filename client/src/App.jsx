@@ -15,11 +15,11 @@ import { JuegoEze } from "./components/juegoEze.jsx"
 import { Diagonostico } from "./pages/Diagnostico.jsx";
 import { JuegoFranco2 } from "./components/JuegoFranco2.jsx";
 import { ResultadosDiagnostico } from "./components/ResultadosDiagnostico.jsx";
-import Proyectos from "./pages/Proyectos.jsx";
 import Project4 from "./components/Project4.jsx";
 import Project5 from "./components/Project5.jsx";
 import Project3 from "./components/Project3.jsx";
 import Project2 from "./components/Project2.jsx";
+import { Login } from "./components/Login.jsx";
 
 function App() {
   return (
@@ -28,14 +28,15 @@ function App() {
         <Route path="/" element={<Layouts />}>
 
           <Route index element={<Home />} />
-          
-          <Route path="/proyectos" element={
-            <ProtectorRutas allowedRoles ={["ADMINISTRATIVO"]} >
-            <Proyectos />
-            </ProtectorRutas>
-            } />
-          <Route path="games" element={<Games />}>
-            <Route path="estrella" element={<GameEstrella />} />
+
+          <Route path="games" element={
+            <ProtectorRutas allowedRoles={["ALUMNO"]} >
+              <Games />
+            </ProtectorRutas>}>
+            <Route path="estrella" element={
+              <ProtectorRutas allowedRoles={["ALUMNO"]}>
+                <GameEstrella />
+              </ProtectorRutas>} />
           </Route>
 
           <Route path="aboutUs" element={<AboutUs />} />
@@ -45,19 +46,36 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="registrar" element={<FormularioRegistro />} />
           <Route path="diagnostico" element={<Diagonostico />} />
+          <Route path="login" element={<Login />} />
           <Route path="juegoFranco" element={<JuegoFranco />} />
           <Route path="juegoFranco2" element={<JuegoFranco2 />} />
           <Route path="juegoSeba01" element={<JuegoSeba01 />} />
           <Route path="juegoSeba02" element={<JuegoSeba02 />} />
-
           <Route path="juegoEze" element={<JuegoEze />} />
-            
+
           <Route path="resultadoDiagnostico" element={<ResultadosDiagnostico />} />
-          <Route path="proyecto4" element={<Project4/>} />
-          <Route path="proyecto5" element={<Project5/>} />
+          <Route path="/proyecto2" element={
+            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
+              <Project2 />
+            </ProtectorRutas>
+          } />
+          <Route path="/proyecto3" element={
+            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
+              <Project3 />
+            </ProtectorRutas>
+          } />
+          <Route path="/proyecto4" element={
+            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
+              <Project4 />
+            </ProtectorRutas>
+          } />
+          <Route path="/proyecto5" element={
+            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
+              <Project5 />
+            </ProtectorRutas>
+          } />
         </Route>
-        <Route path="/proyecto3" element={<Project3/>} />
-        <Route path="/proyecto2" element={<Project2/>} />
+
       </Routes>
     </Container>
   );

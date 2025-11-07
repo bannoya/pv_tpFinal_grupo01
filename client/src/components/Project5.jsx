@@ -8,7 +8,7 @@ export default function Project5() {
       }}
     >
       <iframe
-        src="../public/projects/p5/index.html"
+        src="projects/p5/index.html"
         width="100%"
         height="100%"
         style={{ border: "none" }}
