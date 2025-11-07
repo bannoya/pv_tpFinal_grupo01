@@ -12,5 +12,17 @@ router.get('/obtenerUsuarios', async (req, res) => {
     res.status(500).json({ message: "Error interno", error: String(error) });
   }
 });
+router.post('/registrarUsuarios', async (req, res) => {
+  try {
+    const nuevoUsuario = new User(req.body);
+    const usuarioGuardado = await nuevoUsuario.save();
+
+    res.status(201).json({success: true, data: usuarioGuardado});
+    console.log(res.message);
+  } catch (error) {
+    console.error("Error en /registrarUusuario", error);
+    res.status(500).json({ success: false, message: "Error interno"});
+  }
+});
 
 module.exports = router;

@@ -17,14 +17,12 @@ export const Login = () => {
     // Si tu Provider normalizó a "role", usá user.role. Si no, tomá rol.
     const role = user?.role ?? user?.rol;
 
-    if (role === "ADMINISTRATIVO") {
-      navigate("/proyectos", { replace: true });
-    } else if (role === "ALUMNO") {
-      navigate("/games", { replace: true });
-    } else {
+    if (!role === "ADMINISTRATIVO" && !role === "ALUMNO") {
       // Si no hay rol válido, no fuerces /error; dejá al usuario en donde está
       // o mostrá un mensaje. Si igual querés redirigir:
       navigate("/error", { replace: true });
+    }else if(role) {
+      navigate("/home", { replace: true });
     }
   }, [isAuthenticated, user, navigate]);
 
@@ -47,7 +45,7 @@ export const Login = () => {
     <Container
       fluid
       className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}
+      
     >
       <Card style={{ width: "100%", maxWidth: "400px" }} className="shadow-sm">
         <Card.Body className="p-4">

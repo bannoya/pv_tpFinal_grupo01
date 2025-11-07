@@ -9,7 +9,7 @@ export default function Project3() {
       }}
     >
       <iframe
-        src="/public/projects/p3/index.html"
+        src="projects/p3/index.html"
         width="100%"
         height="100%"
         style={{ border: "none" }}

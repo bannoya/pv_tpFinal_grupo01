@@ -1,16 +1,19 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useAutorizacion } from "../hooks/useAutorizacion.js";
 import logoPX from "../assets/img/icon_PX.png";
+
 
 function Layouts() {
   const { darkMode, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAutorizacion(); // <- YA lo tenés acá
   const navigate = useNavigate();
 
+
   // ❌ NO LLAMES hooks dentro de funciones. Usá el logout ya extraído arriba.
   const manejarLogout = () => {
+    const { logout } = useAutorizacion();
     logout();
     navigate("/");
   };
@@ -54,16 +57,26 @@ function Layouts() {
               >
                 <Nav.Link as={Link} to="/home">🏠 Home</Nav.Link>
                 <Nav.Link as={Link} to="/aboutUs">ℹ️ About</Nav.Link>
-                <Nav.Link as={Link} to="/registrar">📝 Registrar</Nav.Link>
-                <Nav.Link as={Link} to="/games">🎮 Games</Nav.Link>
-                <Nav.Link as={Link} to="/diagnostico">💡 Diagnóstico</Nav.Link>
+                {!isAuthenticated && (
+                  <Nav.Link as={Link} to="/registrar">📝 Registrar</Nav.Link>
+                )}
 
-                <NavDropdown title="💼 Proyectos" id="basic-nav-dropdown" align="end">
-                  <NavDropdown.Item as={Link} to="/proyecto2">Proyecto 2</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/proyecto3">Proyecto 3</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
-                </NavDropdown>
+                {isAuthenticated && role === "ALUMNO" && (
+                  <Nav.Link as={Link} to="/games">🎮 Games</Nav.Link>
+                )}
+
+                {isAuthenticated && role === "ALUMNO" && (
+                  <Nav.Link as={Link} to="/diagnostico">📝 Diagnostico</Nav.Link>
+                )}
+
+                {isAuthenticated && role === "ADMINISTRATIVO" && (
+                  <NavDropdown title="💼 Proyectos" id="basic-nav-dropdown" align="end">
+                    <NavDropdown.Item as={Link} to="/proyecto2">Proyecto 2</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/proyecto3">Proyecto 3</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
+                  </NavDropdown>)}
+
                 <button
                   onClick={toggleTheme}
                   className={`btn fw-bold ${darkMode ? "btn-outline-light" : "btn-outline-dark"}`}
@@ -71,7 +84,18 @@ function Layouts() {
                 >
                   {darkMode ? "☀️ Claro" : "🌙 Oscuro"}
                 </button>
-                
+                {isAuthenticated ? (
+                  <div >
+                    <span>Hola, {user.name}</span>
+                    <Button onClick={logout} style={{ marginLeft: "1rem" }}>
+                      Cerrar sesión
+                    </Button>
+                  </div>
+                ) : (
+                  <Link to="/login">
+                    <Button variant="primary" className="w-100 mt-3">Iniciar Secion</Button>
+                  </Link>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>

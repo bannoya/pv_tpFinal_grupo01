@@ -27,6 +27,7 @@ export function AutorizacionProvider({ children }) {
       setLoadingUsuarios(true);
       const res = await axios.get(API);
       setUsuarioDB(res.data || []);
+      console.log("res.data:", res.data);
     } catch (err) {
       console.error("Error al buscar usuario en la base de datos:", err);
       setUsuarioDB([]);

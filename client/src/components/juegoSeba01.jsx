@@ -67,7 +67,7 @@ export function JuegoSeba01({ contador, setContador, onFinish }) {
     if (!target && !terminado) return null;
 
     return (
-        <Container fluid className="p-5 bg-light text-center">
+        <Container fluid className="p-5 bg-light text-center text-dark">
             <h1>Selecciona el color correcto</h1>
             <p className="mb-2">
                 Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax} ·{" "}

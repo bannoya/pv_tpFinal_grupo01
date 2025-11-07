@@ -22,7 +22,7 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
 
     const [oracionActual, setOracionActual] = useState(null);
     const [palabras, setPalabras] = useState([]);
-    const [resultado, setResultado] = useState(null); 
+    const [resultado, setResultado] = useState(null);
     const [show, setShow] = useState(false);
     const [dragIndex, setDragIndex] = useState(null);
     const [bloqueado, setBloqueado] = useState(false);
@@ -80,7 +80,7 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
         setBloqueado(true);
         if (ok) setContador((c) => c + 1);
 
-     
+
         setTimeout(() => {
             setShow(false);
             if (ronda < rondasMax) {
@@ -88,7 +88,7 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
                 nuevaRonda();
             } else {
                 setTerminado(true);
-                onTerminar?.(); 
+                onTerminar?.();
             }
         }, ok ? 900 : 1100);
     };
@@ -98,15 +98,9 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
     return (
         <Container
             fluid
-            className={`p-5 d-flex flex-column align-items-center text-center ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}
+            className={`p-2 d-flex flex-column align-items-center text-center bg-light text-dark` }
             style={{
-                minHeight: "80vh",
-                background: darkMode
-                    ? "linear-gradient(135deg, #1a1a1a, #0d0d0d)"
-                    : "linear-gradient(135deg, #f8f9fa, #e9ecef)",
-                transition: "all 0.3s ease-in-out",
-            }}
-        >
+                minHeight: "60vh"}}>
             <Row className="w-100 mb-3">
                 <h1 className="fw-bold">Ordená la oración escuchando el audio</h1>
                 <p className="mb-0">
@@ -130,13 +124,12 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
                     </Row>
 
                     <div
-                        className="d-flex flex-wrap justify-content-center gap-3 p-4 rounded shadow-sm"
+                        className="d-flex flex-wrap justify-content-center gap-3 p-4 rounded shadow-sm bg-light"
                         style={{
                             minHeight: 120,
                             width: "80%",
                             margin: "0 auto",
-                            backgroundColor: darkMode ? "#222" : "#fff",
-                            border: darkMode ? "1px solid #333" : "1px solid #eee",
+
                         }}
                     >
                         {palabras.map((palabra, index) => (
@@ -146,7 +139,7 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
                                 onDragStart={() => handleDragStart(index)}
                                 onDrop={() => handleDrop(index)}
                                 onDragOver={handleDragOver}
-                                className="btn btn-outline-primary fs-5"
+                                className="btn btn-outline-primary fs-5 bg-light"
                                 style={{
                                     userSelect: "none",
                                     padding: "10px 20px",
@@ -177,7 +170,7 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
                             size="lg"
                             onClick={comprobarRespuesta}
                             style={{ width: 220, height: 60 }}
-                            disabled={bloqueado} 
+                            disabled={bloqueado}
                         >
                             Comprobar
                         </Button>
@@ -186,7 +179,6 @@ export function JuegoFranco2({ contador, setContador, onTerminar }) {
             ) : (
                 <div className="mt-4">
                     <h2 className="mb-3">🎉 ¡Juego completado!</h2>
-
                 </div>
             )}
         </Container>

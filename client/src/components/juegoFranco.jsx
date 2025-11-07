@@ -86,14 +86,8 @@ export function JuegoFranco({ contador, setContador, onFinish }) {
     return (
         <Container
             fluid
-            className={`p-5 text-center ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}
-            style={{
-                minHeight: "80vh",
-                background: darkMode
-                    ? "linear-gradient(135deg, #1a1a1a, #0d0d0d)"
-                    : "linear-gradient(135deg, #f8f9fa, #e9ecef)",
-                transition: "all 0.3s ease-in-out",
-            }}
+            className={` p-1 bg-light text-center text-dark`}
+
         >
             <Row className="mb-3 flex-column gap-2">
                 <h1>Selecciona la opción correcta según el audio</h1>
@@ -119,13 +113,7 @@ export function JuegoFranco({ contador, setContador, onFinish }) {
 
                     <Row
                         className="d-flex flex-wrap justify-content-center gap-3 p-4 rounded shadow-sm"
-                        style={{
-                            minHeight: 120,
-                            width: "80%",
-                            margin: "0 auto",
-                            backgroundColor: darkMode ? "#222" : "#fff",
-                            border: darkMode ? "1px solid #333" : "1px solid #eee",
-                        }}
+
                     >
                         {opciones.map((op) => (
                             <Button
