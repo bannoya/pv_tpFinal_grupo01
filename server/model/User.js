@@ -7,7 +7,7 @@ const esquemaUsuario = new mongoose.Schema({
   state: Boolean,
   lastname: String,
   name: String,
-  score: Number
+  score: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model('users', esquemaUsuario);

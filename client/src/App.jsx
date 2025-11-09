@@ -20,6 +20,7 @@ import Project5 from "./components/Project5.jsx";
 import Project3 from "./components/Project3.jsx";
 import Project2 from "./components/Project2.jsx";
 import { Login } from "./components/Login.jsx";
+import Encuesta from "./components/Encuesta.jsx";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="juegoEze" element={<JuegoEze />} />
 
           <Route path="resultadoDiagnostico" element={<ResultadosDiagnostico />} />
+          <Route path="encuesta" element={<Encuesta />} />
           <Route path="/proyecto2" element={
             <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
               <Project2 />
