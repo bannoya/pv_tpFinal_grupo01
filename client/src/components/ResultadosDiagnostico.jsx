@@ -2,22 +2,24 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext.jsx";
 
+
 export function ResultadosDiagnostico({ contador, totalJuegos = 5 }) {
   const { darkMode } = useTheme();
+  const valor = typeof contador === "number" ? contador : (user?.score ?? 0);
+
 
   const mensajeFinal =
-    contador >= totalJuegos * 2
+    valor >= totalJuegos * 2
       ? "¡Excelente trabajo! 🌟"
-      : contador >= totalJuegos
-      ? "¡Buen desempeño! 💪"
-      : "Seguí practicando, vas por buen camino 🔁";
+      : valor >= totalJuegos
+        ? "¡Buen desempeño! 💪"
+        : "Seguí practicando, vas por buen camino 🔁";
 
   return (
     <Container
       fluid
-      className={`p-5 d-flex flex-column align-items-center justify-content-center min-vh-100 ${
-        darkMode ? "bg-dark text-light" : "bg-light text-dark"
-      }`}
+      className={`p-5 d-flex flex-column align-items-center justify-content-center min-vh-100 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"
+        }`}
       style={{
         background: darkMode
           ? "linear-gradient(135deg, #1a1a1a, #0d0d0d)"
@@ -45,9 +47,10 @@ export function ResultadosDiagnostico({ contador, totalJuegos = 5 }) {
             variant="primary"
             size="lg"
             style={{ width: "220px", height: "60px" }}
-            onClick={() => window.location.href = "/"} 
+            onClick={() => window.location.href = `/encuesta`}
+
           >
-            Volver al inicio 🏠
+            Ir A la Encuesta
           </Button>
         </Col>
       </Row>

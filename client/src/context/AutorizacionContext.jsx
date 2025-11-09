@@ -4,6 +4,7 @@ import axios from "axios";
 export const AutorizacionContext = createContext(null);
 
 const LS_KEY = "auth:user";
+const BASE_URL = "http://localhost:5000/api/usuarios";
 
 export function AutorizacionProvider({ children }) {
   const [usuarioDB, setUsuarioDB] = useState([]);
@@ -19,15 +20,16 @@ export function AutorizacionProvider({ children }) {
     }
   });
 
-  
-  const API = "http://localhost:5000/api/usuarios/obtenerUsuarios";
+
+  const API = `${BASE_URL}/obtenerUsuarios`;
 
   const buscarUsuario = useCallback(async () => {
     try {
       setLoadingUsuarios(true);
       const res = await axios.get(API);
+    
       setUsuarioDB(res.data || []);
-      console.log("res.data:", res.data);
+      console.log(res.data)
     } catch (err) {
       console.error("Error al buscar usuario en la base de datos:", err);
       setUsuarioDB([]);
@@ -42,7 +44,6 @@ export function AutorizacionProvider({ children }) {
 
   const login = useCallback(
     async (credenciales) => {
-      // Si la lista aún no está cargada, intentamos cargarla
       if (!usuarioDB.length) {
         await buscarUsuario();
       }
@@ -55,7 +56,7 @@ export function AutorizacionProvider({ children }) {
       );
 
       if (found) {
-        // Normalizamos el nombre del campo: rol -> role
+        // Normaliza: guardá _id y mapear rol -> role
         const { password, ...rest } = found;
         const normalized = { ...rest, role: found.rol };
         setUser(normalized);
@@ -73,6 +74,43 @@ export function AutorizacionProvider({ children }) {
     localStorage.removeItem(LS_KEY);
   }, []);
 
+  const saveScore = useCallback(
+  async ({ username, score }) => {
+    if (typeof score !== "number") {
+      return { success: false, message: "score debe ser numérico" };
+    }
+    try {
+      const url = `${BASE_URL}/by-username/${encodeURIComponent(username)}/score`;
+      const res = await axios.put(url, { score });
+      const data = res?.data;
+
+      if (!data?.success || !data?.data) {
+        throw new Error(data?.message || "No se pudo actualizar el score");
+      }
+
+      // Sincronizar user si coincide
+      if (user && user.username === username) {
+        const updatedUser = { ...user, score: data.data.score };
+        setUser(updatedUser);
+        localStorage.setItem(LS_KEY, JSON.stringify(updatedUser));
+      }
+
+      // Actualizar cache
+      setUsuarioDB(prev =>
+        Array.isArray(prev)
+          ? prev.map(u => u.username === username ? { ...u, score: data.data.score } : u)
+          : prev
+      );
+
+      return { success: true, data: data.data };
+    } catch (err) {
+      console.error("saveScore error:", err);
+      return { success: false, message: String(err?.message || err) };
+    }
+  },
+  [user]
+);
+
   // Persistencia
   useEffect(() => {
     if (user) localStorage.setItem(LS_KEY, JSON.stringify(user));
@@ -87,8 +125,10 @@ export function AutorizacionProvider({ children }) {
       logout,
       usuarioDB,
       loadingUsuarios,
+      saveScore,
     }),
-    [user, login, logout, usuarioDB, loadingUsuarios]
+
+    [user, login, logout, usuarioDB, loadingUsuarios, saveScore]
   );
 
   return (
