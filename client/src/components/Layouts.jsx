@@ -59,6 +59,7 @@ function Layouts() {
                 <Nav.Link as={Link} to="/aboutUs">ℹ️ About</Nav.Link>
                 {!isAuthenticated && (
                   <Nav.Link as={Link} to="/registrar">📝 Registrar</Nav.Link>
+                  
                 )}
 
                 {isAuthenticated && role === "ALUMNO" && (
@@ -76,7 +77,7 @@ function Layouts() {
                     <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
                   </NavDropdown>)}
-
+                  <Nav.Link as={Link} to="/perfil">👤 Perfil</Nav.Link>
                 <button
                   onClick={toggleTheme}
                   className={`btn fw-bold ${darkMode ? "btn-outline-light" : "btn-outline-dark"}`}
