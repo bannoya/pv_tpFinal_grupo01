@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Alert, Button } from "react-bootstrap";
 
+// 🎨 Lista de colores disponibles para el juego
+// Cada color tiene una clave, un nombre legible y su valor hexadecimal
 const COLORS = [
     { key: "red", label: "Red", hex: "#ff0000ff" },
     { key: "blue", label: "Blue", hex: "#1100ffff" },
@@ -12,6 +14,7 @@ const COLORS = [
     { key: "black", label: "Black", hex: "#000000" },
 ];
 
+// 🔀 Función que elige N elementos aleatorios del array recibido
 const pickN = (arr, n) => {
     const copy = [...arr];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -20,39 +23,52 @@ const pickN = (arr, n) => {
     }
     return copy.slice(0, n);
 };
+
+// 🎯 Función auxiliar para obtener un elemento aleatorio del array
 const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export function JuegoSeba01({ contador, setContador, onFinish }) {
-    const [choices, setChoices] = useState([]);
-    const [target, setTarget] = useState(null);
-    const [resultado, setResultado] = useState(null);
-    const [show, setShow] = useState(false);
+    // 🎮 Estados principales del juego
+    const [choices, setChoices] = useState([]); // Colores mostrados en pantalla
+    const [target, setTarget] = useState(null); // Color que el jugador debe adivinar
+    const [resultado, setResultado] = useState(null); // Resultado de la ronda (correcto o incorrecto)
+    const [show, setShow] = useState(false); // Controla la visibilidad del mensaje de resultado
 
+    // 🔁 Control de las rondas
     const [ronda, setRonda] = useState(1);
-    const rondasMax = 3;
-    const [terminado, setTerminado] = useState(false);
+    const rondasMax = 3; // Número total de rondas
+    const [terminado, setTerminado] = useState(false); // Indica si el juego terminó
 
+    // 🚀 Función que inicializa una nueva ronda
     function nuevaRonda() {
-        const opts = pickN(COLORS, 4);
-        const tgt = rand(opts);
+        const opts = pickN(COLORS, 4); // Selecciona 4 colores aleatorios
+        const tgt = rand(opts);        // Elige uno de esos colores como el objetivo
         setChoices(opts);
         setTarget(tgt);
         setResultado(null);
         setShow(false);
     }
 
+    // ⚙️ useEffect se ejecuta una sola vez al montar el componente
+    // para iniciar la primera ronda
     useEffect(() => {
         nuevaRonda();
     }, []);
 
+    // 🖱️ Maneja el clic del usuario sobre un color
     const manejarClick = (colorKey) => {
+        // Si ya se respondió o el juego terminó, no hace nada
         if (resultado !== null || terminado) return;
 
+        // Compara si la opción elegida es correcta
         const ok = colorKey === target.key;
         setResultado(ok);
         setShow(true);
+
+        // Si acierta, aumenta el contador global
         if (ok) setContador((c) => c + 1);
 
+        // Después de un breve tiempo pasa a la siguiente ronda o termina el juego
         setTimeout(() => {
             setShow(false);
             if (ronda < rondasMax) {
@@ -64,19 +80,22 @@ export function JuegoSeba01({ contador, setContador, onFinish }) {
         }, ok ? 700 : 900);
     };
 
+    // Mientras el target no esté definido y el juego no haya terminado, no renderiza nada
     if (!target && !terminado) return null;
 
     return (
         <Container fluid className="p-5 bg-light text-center text-dark">
+            {/* 🏁 Título del juego y contador de ronda */}
             <h1>Selecciona el color correcto</h1>
             <p className="mb-2">
-                Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax} ·{" "}
-
+                Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax}
             </p>
 
+            {/* Si el juego no ha terminado, muestra los botones de colores */}
             {!terminado ? (
                 <>
                     <Row className="flex-column gap-4">
+                        {/* Muestra el nombre del color objetivo */}
                         <Col>
                             <div
                                 className="mx-auto"
@@ -93,6 +112,7 @@ export function JuegoSeba01({ contador, setContador, onFinish }) {
                             </div>
                         </Col>
 
+                        {/* Muestra los 4 botones de colores posibles */}
                         <Col className="d-flex justify-content-center gap-3 flex-wrap">
                             {choices.map((c) => (
                                 <button
@@ -114,6 +134,7 @@ export function JuegoSeba01({ contador, setContador, onFinish }) {
                             ))}
                         </Col>
 
+                        {/* 🧩 Mensaje de feedback (correcto o incorrecto) */}
                         <div>
                             {resultado !== null && show && (
                                 <Alert
@@ -128,10 +149,9 @@ export function JuegoSeba01({ contador, setContador, onFinish }) {
                     </Row>
                 </>
             ) : (
+                // 🎉 Pantalla final cuando se completan todas las rondas
                 <div className="mt-4">
                     <h2 className="mb-3">🎉 ¡Juego completado!</h2>
-
-
                 </div>
             )}
         </Container>

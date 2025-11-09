@@ -4,7 +4,7 @@ export default function Project4() {
       className="d-flex justify-content-center align-items-center"
       style={{
         height: "100vh",
-        backgroundColor: "#0d1117", // o el color que quieras
+        backgroundColor: "#0d1117",
         overflow: "hidden",
       }}
     >
