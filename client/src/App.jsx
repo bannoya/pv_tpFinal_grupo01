@@ -21,6 +21,7 @@ import Project3 from "./components/Project3.jsx";
 import Project2 from "./components/Project2.jsx";
 import { Login } from "./components/Login.jsx";
 import Encuesta from "./components/Encuesta.jsx";
+import Perfil from "./pages/Perfil.jsx";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
               <Project5 />
             </ProtectorRutas>
           } />
+          <Route path="/perfil" element={<Perfil />} />
         </Route>
 
       </Routes>
