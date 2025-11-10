@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 02</title>
+    <link rel="stylesheet" href="ejercicio02.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <h1>Registro de Mascota</h1>
+        <p>Registra las mascotas de tus clientes y lleva un control de su estado de vacunación</p>
+        <section class="seccion-formulario">
+            <form action="" id="formulario">
+                <label for="nombre-mascota">Nombre de la Mascota:</label>
+                <input type="text" id="nombre-mascota" required>
+
+                <label for="opciones">Tipo de mascota:</label>
+                <select id="opciones" name="opciones">
+                    <option value="" disabled selected>Selecciona...</option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                    <option value="conejo">Conejo</option>
+                    <option value="pajaro">Pájaro</option>
+                    <option value="otros">Otros</option>
+                </select>
+
+                <label for="edad">Edad (años):</label>
+                <input type="number" id="edad" required>
+
+                <label for="nombre-dueno">Nombre del dueño:</label>
+                <input type="text" id="nombre-dueno" required>
+
+                <p>¿Está vacunado/a?</p>
+                <div class="opciones-vacunado">
+                    <input type="radio" id="si" name="vacunado" value="si">
+                    <label for="si">Sí</label>
+                    <input type="radio" id="no" name="vacunado" value="no">
+                    <label for="no">No</label>
+                </div>
+
+                <button type="submit" id="submit">Registrar Mascota</button>
+            </form>
+        </section>
+
+    </div>
+    <!-- Aca esta los div que modifique -->
+    <div>
+        <table id="tabla-mascotas">
+            <tr>
+                <td>Nombre</td>
+                <td>Tipo</td>
+                <td>Edad</td>
+                <td>Dueño</td>
+                <td>Vacunado</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+    <div id ="cont">
+        <table id="contador">
+            <thead>
+                <tr>
+                    <th>Mascotas Registradas</th>
+                    <th>Vacunadas</th>
+                    <th>No Vacunadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="total-mascotas">0</td>
+                    <td id="vacunadas">0</td>
+                    <td id="no-vacunadas">0</td>
+                </tr>
+            </tbody>
+        </table>
+
+    <script type="module" src="ejercicio02.js"></script>
+</body>
+
+</html>
