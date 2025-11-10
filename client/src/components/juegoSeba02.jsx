@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Alert, Button } from "react-bootstrap";
 
+// 🔢 Lista de números con su valor y nombre en inglés
 const NUMBERS = [
     { value: 1, en: "one" }, { value: 2, en: "two" }, { value: 3, en: "three" },
     { value: 4, en: "four" }, { value: 5, en: "five" }, { value: 6, en: "six" },
@@ -8,9 +9,12 @@ const NUMBERS = [
     { value: 10, en: "ten" },
 ];
 
+// 🧩 Función que elige un elemento aleatorio de un arreglo
 function rand(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
+
+// 🔀 Función para mezclar un arreglo (Fisher-Yates shuffle)
 function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -19,48 +23,73 @@ function shuffle(arr) {
     }
     return a;
 }
+
+// ❌ Función que selecciona opciones incorrectas (distractores)
+// - pool: conjunto de todos los elementos
+// - correct: el elemento correcto
+// - k: cantidad de distractores
+// - key: propiedad que se usará para comparar
 function pickDistractors(pool, correct, k = 2, key = "en") {
     const candidates = pool.filter((x) => x[key] !== correct[key]);
     return shuffle(candidates).slice(0, k);
 }
 
+// 🎮 Componente principal del juego
 export function JuegoSeba02({ contador, setContador, onFinish, variant = "numbers" }) {
-    const [prompt, setPrompt] = useState(null);
-    const [correct, setCorrect] = useState(null);
-    const [options, setOptions] = useState([]);
-    const [resultado, setResultado] = useState(null);
-    const [show, setShow] = useState(false);
+    // Estados principales del juego
+    const [prompt, setPrompt] = useState(null);     // Número mostrado (en cifra)
+    const [correct, setCorrect] = useState(null);   // Objeto correcto (valor + texto)
+    const [options, setOptions] = useState([]);     // Opciones disponibles (en inglés)
+    const [resultado, setResultado] = useState(null); // Resultado de la selección
+    const [show, setShow] = useState(false);        // Controla la visibilidad del mensaje
 
+    // Control de rondas
     const [ronda, setRonda] = useState(1);
-    const rondasMax = 3;
-    const [terminado, setTerminado] = useState(false);
+    const rondasMax = 3;                            // Cantidad total de rondas
+    const [terminado, setTerminado] = useState(false); // Indica si terminó el juego
 
+    // 🚀 Inicializa una nueva ronda
     function nuevaRonda() {
         setResultado(null);
         setShow(false);
 
+        // Si el modo de juego es “numbers”
         if (variant === "numbers") {
+            // Selecciona un número aleatorio correcto
             const c = rand(NUMBERS);
+
+            // Elige 2 distractores que no sean el correcto
             const dist = pickDistractors(NUMBERS, c, 2, "en");
+
+            // Combina el correcto con los distractores y mezcla el orden
             const opts = shuffle([c.en, ...dist.map((d) => d.en)]);
-            setPrompt(String(c.value));
-            setCorrect(c);
-            setOptions(opts);
+
+            // Actualiza los estados para mostrar la nueva ronda
+            setPrompt(String(c.value)); // Muestra el número (por ejemplo “5”)
+            setCorrect(c);              // Guarda el número correcto
+            setOptions(opts);           // Muestra las opciones mezcladas
         }
     }
 
+    // ⚙️ useEffect: se ejecuta al montar el componente o si cambia el tipo de juego
     useEffect(() => {
         nuevaRonda();
     }, [variant]);
 
+    // 🖱️ Maneja el clic del usuario sobre una opción
     const manejarClick = (opt) => {
+        // Si ya respondió o el juego terminó, no hace nada
         if (resultado !== null || terminado) return;
+
+        // Verifica si la opción elegida es la correcta
         const ok = opt === correct.en;
         setResultado(ok);
         setShow(true);
+
+        // Si acierta, incrementa el contador global
         if (ok) setContador((c) => c + 1);
 
-
+        // Espera un tiempo antes de pasar a la siguiente ronda o finalizar
         setTimeout(() => {
             setShow(false);
             if (ronda < rondasMax) {
@@ -72,19 +101,23 @@ export function JuegoSeba02({ contador, setContador, onFinish, variant = "number
         }, ok ? 700 : 900);
     };
 
+    // Si aún no hay datos de la ronda y el juego no ha terminado, no renderiza nada
     if (!correct && !terminado) return null;
 
+    // 🧠 Renderizado del juego
     return (
         <Container fluid className="p-5 bg-light text-center text-dark">
             <Row className="mb-4 flex-column gap-4">
+                {/* 🏁 Encabezado y progreso */}
                 <h1>Elige el nombre correcto en inglés</h1>
                 <p>
-                    Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax} ·{" "}
-
+                    Ronda <strong>{Math.min(ronda, rondasMax)}</strong> de {rondasMax}
                 </p>
 
+                {/* Si el juego no ha terminado, muestra el contenido */}
                 {!terminado ? (
                     <>
+                        {/* 📊 Muestra el número actual (por ejemplo “3”) */}
                         <Col>
                             <div
                                 className="mx-auto"
@@ -102,6 +135,7 @@ export function JuegoSeba02({ contador, setContador, onFinish, variant = "number
                             </div>
                         </Col>
 
+                        {/* 🎯 Botones con las opciones en inglés */}
                         <Col className="d-flex justify-content-center gap-3 flex-wrap">
                             {options.map((opt) => (
                                 <button
@@ -123,6 +157,7 @@ export function JuegoSeba02({ contador, setContador, onFinish, variant = "number
                             ))}
                         </Col>
 
+                        {/* ✅❌ Mensaje de resultado */}
                         {resultado !== null && show && (
                             <Alert
                                 show={show}
@@ -134,9 +169,9 @@ export function JuegoSeba02({ contador, setContador, onFinish, variant = "number
                         )}
                     </>
                 ) : (
+                    // 🎉 Pantalla final cuando se completan todas las rondas
                     <div className="mt-4">
                         <h2 className="mb-3">🎉 ¡Juego completado!</h2>
-
                     </div>
                 )}
             </Row>
