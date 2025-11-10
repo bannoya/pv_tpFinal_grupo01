@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link} from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
 import { useTheme } from "../context/ThemeContext.jsx"; // 🎨 Contexto para manejar tema oscuro/claro
 import { useAutorizacion } from "../hooks/useAutorizacion.js"; // 🔐 Hook personalizado de autenticación
@@ -11,23 +11,14 @@ function Layouts() {
 
   // Extrae información del usuario y funciones de autenticación
   const { user, isAuthenticated, logout } = useAutorizacion();
-  const navigate = useNavigate();
-
-  // ⚠️ Esta función no es necesaria porque ya se obtuvo `logout` arriba,
-  // pero se mantiene según el código original.
-  // En general, no se deben llamar hooks dentro de funciones.
-  const manejarLogout = () => {
-    const { logout } = useAutorizacion();
-    logout();
-    navigate("/");
-  };
+  
 
   // 🔍 Determina el rol del usuario. Usa `role` o `rol` según cómo esté definido en tu backend.
   const role = user?.role ?? user?.rol;
 
   return (
     <>
-      {/* 🧭 ENCABEZADO PRINCIPAL (Navbar) */}
+      
       <header style={{ paddingBottom: "1px" }}>
         <Navbar
           expand="lg"
@@ -54,15 +45,15 @@ function Layouts() {
               <span>Proyecto X</span>
             </Navbar.Brand>
 
-            {/* Botón responsive para colapsar menú */}
+            
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              {/* 🧩 Sección de enlaces de navegación */}
+              
               <Nav
                 className="align-items-center gap-3 ms-auto"
                 style={{ fontSize: "1.15rem", fontWeight: "500" }}
               >
-                {/* Enlaces visibles para todos */}
+                
                 <Nav.Link as={Link} to="/home">🏠 Home</Nav.Link>
                 <Nav.Link as={Link} to="/aboutUs">ℹ️ About</Nav.Link>
 
@@ -79,15 +70,15 @@ function Layouts() {
                   </>
                 )}
 
-                {/* Menú desplegable para usuarios ADMINISTRATIVOS */}
-                {isAuthenticated && role === "ADMINISTRATIVO" && (
-                  <NavDropdown title="💼 Proyectos" id="basic-nav-dropdown" align="end">
-                    <NavDropdown.Item as={Link} to="/proyecto2">Proyecto 2</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/proyecto3">Proyecto 3</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
-                  </NavDropdown>
-                )}
+                
+
+                <NavDropdown title="💼 Proyectos" id="basic-nav-dropdown" align="end">
+                  <NavDropdown.Item as={Link} to="/proyecto2">Proyecto 2</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto3">Proyecto 3</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto4">Proyecto 4</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/proyecto5">Proyecto 5</NavDropdown.Item>
+                </NavDropdown>
+
 
                 {/* Perfil visible para todos los usuarios autenticados */}
                 {isAuthenticated && (
@@ -103,16 +94,16 @@ function Layouts() {
                   {darkMode ? "☀️ Claro" : "🌙 Oscuro"}
                 </button>
 
-                {/*  Control de autenticación */}
+                
                 {isAuthenticated ? (
-                  // Si está autenticado: muestra el nombre y botón de logout
+                  
                   <div>
                     <Button onClick={logout} style={{ marginLeft: "1rem" }}>
                       Cerrar sesión
                     </Button>
                   </div>
                 ) : (
-                  // Si NO está autenticado: muestra botón para iniciar sesión
+                  
                   <Link to="/login">
                     <Button variant="primary" className="w-100 mt-3" style={{ marginBottom: "15px" }}>Iniciar Secion</Button>
                   </Link>
