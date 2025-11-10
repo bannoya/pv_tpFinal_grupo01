@@ -4,7 +4,7 @@ import Layouts from "./components/Layouts.jsx";
 import { ProtectorRutas } from "./components/ProtectorRutas.jsx";
 import Home from "./pages/Home.jsx";
 import Games from "./pages/Games.jsx";
-import AboutUs from "./pages/AboutUS.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
 import Error from "./pages/Error.jsx";
 import GameEstrella from "./components/Estrella.jsx";
 import { FormularioRegistro } from "./components/Registrar.jsx";
@@ -55,33 +55,17 @@ function App() {
           <Route path="juegoEze" element={<JuegoEze />} />
 
           <Route path="resultadoDiagnostico" element={<ResultadosDiagnostico />} />
-         
-          <Route path="/proyecto2" element={
-            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
-              <Project2 />
-            </ProtectorRutas>
-          } />
-          <Route path="/proyecto3" element={
-            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
-              <Project3 />
-            </ProtectorRutas>
-          } />
-          <Route path="/proyecto4" element={
-            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
-              <Project4 />
-            </ProtectorRutas>
-          } />
-          <Route path="/proyecto5" element={
-            <ProtectorRutas allowedRoles={["ADMINISTRATIVO"]} >
-              <Project5 />
-            </ProtectorRutas>
-          } />
+
+          <Route path="/proyecto2" element={ <Project2 />} />
+          <Route path="/proyecto3" element={<Project3 />} />
+          <Route path="/proyecto4" element={<Project4 /> } />
+          <Route path="/proyecto5" element={<Project5 />} />
 
           <Route path="/perfil" element={
             <ProtectorRutas allowedRoles={["ALUMNO", "ADMINISTRATIVO"]} >
-            <Perfil />
+              <Perfil />
             </ProtectorRutas>
-            } />
+          } />
         </Route>
 
       </Routes>
