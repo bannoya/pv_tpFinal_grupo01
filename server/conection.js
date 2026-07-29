@@ -1,24 +1,23 @@
-// Importamos el paquete mongoose para interactuar con MongoDB
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-// Realizamos la conexión a MongoDB Atlas.
-// 📌 Esta URL incluye:
-//   - Usuario: jsebach99_db_user
-//   - Contraseña: 0CNqQmNXoeCxr5WC
-//   - Cluster: cluster0.uxnqrd1.mongodb.net
-//   - Base de datos: tudivj
-// ⚠️ IMPORTANTE: Nunca compartas credenciales reales en repositorios públicos.
-mongoose.connect("mongodb+srv://jsebach99_db_user:0CNqQmNXoeCxr5WC@cluster0.uxnqrd1.mongodb.net/tudivj?appName=Cluster0");
+const mongoUri = process.env.MONGODB_URI;
 
-// Guardamos la conexión activa en una variable para escuchar eventos
-const object = mongoose.connection;
+if (!mongoUri) {
+  throw new Error(
+    "MONGODB_URI is required. Copy .env.example to .env and provide a rotated MongoDB credential."
+  );
+}
 
-// 📡 Evento “connected” → se ejecuta cuando la conexión es exitosa
-object.on('connected', () => {
-  console.log("✅ Conectado a MongoDB");
+mongoose.connect(mongoUri);
+
+const connection = mongoose.connection;
+
+connection.on("connected", () => {
+  console.log("Connected to MongoDB");
 });
 
-// ⚠️ Evento “error” → se ejecuta si ocurre un problema durante la conexión
-object.on('error', (err) => {
-  console.error('❌ Error de MongoDB:', err);
+connection.on("error", (error) => {
+  console.error("MongoDB connection error:", error.message);
 });
+
+module.exports = connection;
